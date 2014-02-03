@@ -1,0 +1,100 @@
+name: LikeABoss
+version: 1.7.4
+main: nicktags.NickTags
+author: pikachuman1
+description: Incredible custom commands by pikachuman1!
+commands:
+   ttp:
+      description: </ttp> <player> <target> Teleport to another player!
+      permission: testplugin.tp
+   tsuicide:
+      description: </tsuicide> Kill yourself!
+      permission: testplugin.suicide
+   tignite:
+      description: </tignite> <player> Burn a player!
+      permission: testplugin.ignite
+   tshoot:
+      description: </tshoot> Shoots an arrow.
+      permission: testplugin.shoot
+   tbomb:
+      description: </tbomb> Fires a fireball.
+      permission: testplugin.bomb
+   tmeow:
+      description: </tmeow> Meow a player!
+      permission: testplugin.meow
+   texplode:
+      description: </texplode> <target> Explode a player!
+      permission: testplugin.explode
+   tEnchant:
+      description: </tenchant> <ID> <level> Enchant the item in your hand. Level maximum is 10000. Any enchant for any item.
+      permission: testplugin.enchant
+   theal:
+      description: </theal> <player> Heal a player!
+      permission: testplugin.heal
+   thead:
+      description: </thead> <target> Get a players head!
+      permission: testplugin.head
+   tchicken:
+      description: </tchicken> <target> Chicken Troll a player!
+      permission: testplugin.chicken
+   tjet:
+      description: </tjet> Fly!
+      permission: testplugin.jet
+   witchcraft:
+      description: </witchcraft> Use your witchcraft!
+      permission: testplugin.witchcraft
+   bookmark:
+      description: </bookmark> <name> Save a location!
+      permission: testplugin.bookmark
+   shade:
+      description: </shade> Spawn a legendary Shade!
+      permission: testplugin.shade
+   warrior:
+      description: </warrior> Spawn a warrior to battle!
+      permission: testplugin.warrior
+   skeleton:
+      description: </skeleton> Spawn a skeleton to battle!
+      permission: testplugin.skeleton
+   chaos:
+      description: </chaos> See what happens!
+      permission: testplugin.chaos
+   glitch:
+      description: </glitch> See this epic glitch!
+      permission: testplugin.glitch
+   sheeptower:
+      description: </sheeptower> Spawns sheep that were trained in a circus!
+      permission: testplugin.sheeptower
+   fwshoot:
+      description: </fwshoot> Shoots a firework that you ride!
+      permission: testplugin.fwshoot
+   enderdragon:
+      description: </enderdragon> Ride an enderdragon!!!
+      permission: *
+permissions:
+   testplugin.*:
+      description: Inherits all command permissions for testplugin.
+      children:
+         testplugin.head:
+         testplugin.heal:
+         testplugin.hide:
+         testplugin.enchant:
+         testplugin.tp:
+         testplugin.shoot:
+         testplugin.explode:
+         testplugin.ignite:
+         testplugin.suicide:
+         testplugin.explode.immune:
+         testplugin.ignite.immune:
+         testplugin.hide.immune:
+         testplugin.chicken:
+         testplugin.jet:
+         testplugin.shade:
+         testplugin.warrior:
+         testplugin.skeleton:
+         testplugin.bookmark:
+         testplugin.bookmark.player:
+         testplugin.chaos:
+         testplugin.witchcraft:
+         testplugin.glitch:
+         testplugin.sheeptower:
+         testplugin.fwshoot:

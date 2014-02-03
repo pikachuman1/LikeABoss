@@ -1,0 +1,1021 @@
+package nicktags;
+
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
+import org.bukkit.Effect;
+import org.bukkit.EntityEffect;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Chicken;
+import org.bukkit.entity.Enderman;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Fireball;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Sheep;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Wither;
+import org.bukkit.entity.Zombie;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+public class NickTags extends JavaPlugin implements Listener{
+	Plugin plugin = this;
+		@Override
+		public void onEnable(){
+			System.out.println("LikeABoss Enabled");
+			Bukkit.getServer().broadcastMessage(ChatColor.AQUA+"LikeABoss Enabled");
+		}
+		@Override
+		public void onDisable(){
+			System.out.println("LikeABoss Disabled");
+			Bukkit.getServer().broadcastMessage(ChatColor.AQUA+"LikeABoss Disabled");
+			
+		}
+		@SuppressWarnings(value = {"deprecation", "unused"})
+		@Override		
+		public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
+
+			if (label.equalsIgnoreCase("ttp")) {
+				{Player target = ((Player) sender).getServer().getPlayer(args[0]);
+				
+			        if (target == null) {
+			            sender.sendMessage(ChatColor.DARK_RED + args[0] + " is not currently online.");
+			            return true;
+			        }
+				
+				else if (sender.isOp() || sender.hasPermission("testplugin.tp") || sender.hasPermission("testplugin.*")) {
+					if (args.length < 0) {
+						sender.sendMessage(ChatColor.DARK_RED + "Usage: /ttp <player> <target>");
+					} 
+					else if (args.length == 0) {
+							sender.sendMessage(ChatColor.DARK_RED + "Usage: /ttp <player> <target>");
+						} else if (args.length == 1) {
+							Player targetPlayer = ((Player) sender).getServer().getPlayer(args[0]);
+					        if (target == null) {
+					            sender.sendMessage(ChatColor.DARK_RED + args[0] + " is not currently online.");
+					            return true;
+					        }
+							Location targetPlayerLocation = targetPlayer.getLocation();
+							((Player) sender).teleport(targetPlayerLocation);
+							targetPlayer.sendMessage(ChatColor.BLUE+sender.getName()+" has been teleported to you!");
+							sender.sendMessage(ChatColor.BLUE+"You have been teleported to "+targetPlayer.getName());
+						} else if (args.length == 2) {
+
+							Player targetPlayer = ((Player) sender).getServer().getPlayer(args[0]);
+							Player targetPlayer1 = ((Player) sender).getServer().getPlayer(args[1]);
+							Location targetPlayer1Location = targetPlayer1.getLocation();
+							targetPlayer.teleport(targetPlayer1Location);
+							targetPlayer.sendMessage(ChatColor.BLUE+"You have been teleported to " + targetPlayer1.getName());
+							targetPlayer1.sendMessage(ChatColor.BLUE+targetPlayer.getName()+" has been teleported to you!");
+					        if (targetPlayer1 == null) {
+					            sender.sendMessage(ChatColor.DARK_RED + args[0] + " is not currently online.");
+					            return true;
+					        }
+					        if (targetPlayer == null) {
+					            sender.sendMessage(ChatColor.DARK_RED + args[0] + " is not currently online.");
+					            return true;
+					        }
+						}
+					} else {
+						sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!");
+					}
+				}
+				}
+			if (label.equalsIgnoreCase("tsuicide")){
+					Player player = (Player) sender;
+					if (sender.isOp() || sender.hasPermission("testplugin.suicide") || sender.hasPermission("testplugin.*")){
+						
+			player.setHealth(0);
+			player.sendMessage(ChatColor.RED+"You took your own life!");
+			Bukkit.getServer().broadcastMessage(ChatColor.YELLOW+player.getName()+ChatColor.DARK_RED+" took their own life!");
+				}
+					else{
+						sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.suicide)");
+						
+					}
+
+					}
+				if (label.equalsIgnoreCase("tignite")){
+					Player target = ((Player) sender).getServer().getPlayer(args[0]);
+					if (sender.isOp() || sender.hasPermission("testplugin.ignite") || sender.hasPermission("testplugin.*")){
+						if (args.length > 1) {
+					           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tignite <target>");
+					           return false;
+					        } 
+					        if (args.length == 0) {
+								Bukkit.getServer().broadcastMessage(ChatColor.YELLOW+sender.getName()+ChatColor.DARK_RED+" ignited themself! ");
+					            target.setFireTicks(1900);
+					            target.sendMessage(ChatColor.RED+"You have ignited yourself!");
+					           return false;
+					        }
+							if (args.length == 1) {
+
+						        
+							
+							
+						
+						
+				        if (target == null) {
+				            sender.sendMessage(ChatColor.DARK_RED + args[0] + " is not currently online.");
+				            return true;
+				        }else{
+							if (target.isOp() || target.hasPermission("testplugin.ignite.immune") || target.hasPermission("testplugin.*")){
+								sender.sendMessage(ChatColor.DARK_RED+"You cannot ignite that player!");
+								target.sendMessage(ChatColor.DARK_RED+sender.getName()+" tried to ignite you!");
+								
+								
+							}
+							else
+							{
+							Bukkit.getServer().broadcastMessage(ChatColor.YELLOW+target.getName()+ChatColor.DARK_RED+" was ignited by "+ChatColor.YELLOW+sender.getName());
+				            target.setFireTicks(1900);
+				            target.sendMessage(ChatColor.RED+"You have been burned by "+sender.getName()+"!");
+				            sender.sendMessage(ChatColor.BLUE+"You have burned "+target.getName()+"!");
+				            }
+				        }
+				}
+					else{
+						sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.ignite)");
+						
+					}
+
+					}
+			}
+			if (label.equalsIgnoreCase("tshoot")){
+				Player player = (Player) sender;
+				Arrow arrow = player.shootArrow();
+				Location arrowloc = arrow.getLocation();
+				
+				if (sender.isOp() || sender.hasPermission("testplugin.shoot") || sender.hasPermission("testplugin.*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tshoot");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tshoot");
+				           return false;
+				        }
+						if (args.length == 0) {
+							
+					        arrow.setVelocity(player.getLocation().getDirection().normalize().multiply(20));
+					        player.getWorld().playEffect(arrowloc, Effect.BOW_FIRE, 3);
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.info)");
+					
+				}
+
+				}
+
+			
+			
+				if (label.equalsIgnoreCase("texplode")){
+					Player target = ((Player) sender).getServer().getPlayer(args[0]);
+					if (sender.isOp() || sender.hasPermission("testplugin.explode") || sender.hasPermission("testplugin.*")){
+						if (args.length > 1) {
+					           sender.sendMessage(ChatColor.DARK_RED+"Usage: /texplode <target>");
+					           return false;
+					        } 
+					        if (args.length == 0) {
+					        	Player player = (Player) sender;
+								player.getWorld().createExplosion(target.getLocation(), 3);
+					            player.setFireTicks(1900);
+					            player.sendMessage(ChatColor.RED+"You have blown up yourself!");
+					            return false;
+					        }
+							if (args.length == 1) {
+
+						        
+							
+							
+						
+						
+				        if (target == null) {
+				            sender.sendMessage(ChatColor.DARK_RED + args[0] + " is not currently online.");
+				            return true;
+				        }else{
+							if (target.isOp() || target.hasPermission("testplugin.explode.immune") || target.hasPermission("testplugin.*")){
+								sender.sendMessage(ChatColor.DARK_RED+"You cannot explode that player!");
+								target.sendMessage(ChatColor.DARK_RED+sender.getName()+" tried to explode you!");
+								
+								
+							}
+							else
+							{
+							Bukkit.getServer().broadcastMessage(ChatColor.YELLOW+target.getName()+ChatColor.DARK_RED+" was blown up by "+ChatColor.YELLOW+sender.getName());
+							target.getWorld().createExplosion(target.getLocation(), 3);
+				            target.setFireTicks(1900);
+				            target.sendMessage(ChatColor.RED+"You have been blown up by "+sender.getName()+"!");
+				            sender.sendMessage(ChatColor.BLUE+"You have blown up "+target.getName()+"!");
+				            
+				            }
+				        }
+				}
+					else{
+						sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.explode)");
+						
+					}
+
+					}
+			}
+				
+			
+			if (label.equalsIgnoreCase("tenchant")){
+				if (sender.isOp() || sender.hasPermission("testplugin.enchant") || sender.hasPermission("testplugin.*")){
+					if (args.length > 2) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tenchant <ID> <level>");
+				           return false;
+				        } 
+				        if (args.length < 2) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tenchant <ID> <level>");
+				           return false;
+				        }
+						if (args.length == 2) {
+							Player player = (Player) sender;
+							((HumanEntity) player).getItemInHand().getType();
+						       ItemMeta meta = player.getItemInHand().getItemMeta();
+							int LVL = (Integer.parseInt(args[1]));
+							{
+							
+							if(args[0].equalsIgnoreCase("fire_aspect")){
+
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.FIRE_ASPECT), (LVL));
+					         
+							}
+							if(args[0].equalsIgnoreCase("knockback")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.KNOCKBACK), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("looting")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.LOOT_BONUS_MOBS), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("sharpness")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.DAMAGE_ALL), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("unbreaking")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.DURABILITY), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("feather_falling")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.PROTECTION_FALL), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("protection")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.PROTECTION_ENVIRONMENTAL), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("smite")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.DAMAGE_UNDEAD), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("bane_of_arthropods")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.DAMAGE_ARTHROPODS), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("power")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.ARROW_DAMAGE), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("punch")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.ARROW_KNOCKBACK), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("fire_protection")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.PROTECTION_FIRE), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("thorns")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.THORNS), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("projectile_protection")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.PROTECTION_PROJECTILE), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("explosion_protection")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.PROTECTION_EXPLOSIONS), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("effeciency")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.DIG_SPEED), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("infinity")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.ARROW_INFINITE), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("fortune")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.LOOT_BONUS_BLOCKS), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("silk_touch")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.SILK_TOUCH), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("respiration")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.OXYGEN), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("flame")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.ARROW_FIRE), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("aqua_affinity")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.WATER_WORKER), (LVL));
+							}
+							if(args[0].equalsIgnoreCase("fire_resistance")){
+							player.getItemInHand().addUnsafeEnchantment((Enchantment.PROTECTION_FIRE), (LVL));
+							}
+						}
+							}else{
+								sender.sendMessage(ChatColor.DARK_RED+"Usage: /testenchant <ID> <LVL>");
+								sender.sendMessage(ChatColor.RED+"enchantment list");
+								sender.sendMessage(ChatColor.YELLOW+"fire_aspect, looting, flame, power, aqua_affinity, knockback, feather_falling, protection, explosion_protection,"
+										+ " sharpness, respiration, unbreaking, thorns, effeciency, silk_touch, smite, bane_of_arthropods, punch, fire_resistance");
+							}
+			        }
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.enchant)");	
+				}
+			}
+			if (label.equalsIgnoreCase("theal")){
+				if (sender.isOp() || sender.hasPermission("testplugin.heal") || sender.hasPermission("testplugin.*")){
+					if (args.length > 1) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /theal <player>");
+				           return false;
+				        }
+				        if (args.length == 0) {
+				        	String playername = sender.getName();
+
+				        	Player player = (Player) sender;
+							sender.sendMessage(ChatColor.BLUE+"You have healed yourself!");
+							player.setMaxHealth(20);
+							player.setHealth(20);
+							player.setNoDamageTicks(20);
+							player.setFoodLevel(20);
+							player.getActivePotionEffects().clear();
+							player.setCustomNameVisible(true);
+							player.setDisplayName(player.getName());
+							player.setCustomName(player.getDisplayName());
+
+				           return false;
+				        }
+						if (args.length == 1) {
+							Player player = (Player) sender;
+							Player target = ((Player) sender).getServer().getPlayer(args[0]);
+							if (target == null){
+								player.sendMessage(ChatColor.DARK_RED+args[0]+" is not currently online!");
+							}else{
+								String playername = target.getName();
+
+								sender.sendMessage(ChatColor.BLUE+"You have healed "+target.getDisplayName());
+								target.sendMessage(ChatColor.AQUA+sender.getName()+" has healed you!");
+								target.setMaxHealth(20);
+								target.setHealth(20);
+								target.setNoDamageTicks(20);
+								target.setFoodLevel(20);
+								target.getActivePotionEffects().clear();
+								target.setCustomNameVisible(true);
+								target.setDisplayName(target.getName());
+								target.setCustomName(target.getName());
+
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.heal)");	
+				}
+				}
+		}
+			if(label.equalsIgnoreCase("thead") && args.length == 1){
+				Player player = ((Player) sender);
+				if (player.isOp() || player.hasPermission("testplugin.head") || player.hasPermission("testplugin.*")){
+				    if(sender instanceof Player) {
+				ItemStack hhead = new ItemStack(Material.SKULL_ITEM, 1);
+				hhead.setDurability((short)3);
+				SkullMeta skullMeta = (SkullMeta)hhead.getItemMeta();
+				skullMeta.setOwner(args[0]);
+				skullMeta.setDisplayName(ChatColor.AQUA+args[0]+"'s head");
+				hhead.setItemMeta(skullMeta);
+				((HumanEntity) sender).getInventory().addItem(hhead);
+				sender.sendMessage(ChatColor.GOLD + "Obtained " + args[0] + "'s head!");
+				((HumanEntity) sender).getInventory().addItem(hhead);
+				    }
+				}else{
+					sender.sendMessage(ChatColor.DARK_RED+"Only players can use this command!");
+				}
+				}
+			if (label.equalsIgnoreCase("tchicken")){
+
+				if (sender.isOp() || sender.hasPermission("testplugin.chicken") || sender.hasPermission("testplugin.*")){
+					if (args.length > 1) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tchicken <player>");
+				           return false;
+				        }
+				        if (args.length < 1) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tchicken <player>");
+				           return false;
+				        }
+						if (args.length == 1) {
+							Player player = (Player) sender;
+							Player target = ((Player) sender).getServer().getPlayer(args[0]);
+							Location targetlocation = target.getLocation();
+							if (target == null){
+								player.sendMessage(ChatColor.DARK_RED+args[0]+" is not currently online!");
+							}else{
+								target.sendMessage(ChatColor.RED+sender.getName()+" has chickened you!");
+				                ItemStack feather = new ItemStack(Material.FEATHER, 5);
+				                ItemStack rawchicken = new ItemStack(Material.RAW_CHICKEN, 5);
+								target.setMaxHealth(4);
+								target.setHealth(4);
+								Chicken chicken =  (Chicken) target.getWorld().spawnEntity(targetlocation, EntityType.CHICKEN);
+								Chicken chicken2 = (Chicken) target.getWorld().spawnEntity(targetlocation, EntityType.CHICKEN);
+								Chicken chicken3 = (Chicken) target.getWorld().spawnEntity(targetlocation, EntityType.CHICKEN);
+								Chicken chicken4 = (Chicken) target.getWorld().spawnEntity(targetlocation, EntityType.CHICKEN);
+								Chicken chicken5 = (Chicken) target.getWorld().spawnEntity(targetlocation, EntityType.CHICKEN);
+								Chicken chicken6 = (Chicken) target.getWorld().spawnEntity(targetlocation, EntityType.CHICKEN);
+								chicken.setCustomName(ChatColor.BLUE+"Clucks 2.0");
+								chicken2.setCustomName(ChatColor.RED+sender.getName()+"'s Chicken");
+								chicken3.setCustomName(ChatColor.YELLOW+"Cluckerooni");
+								chicken4.setCustomName(ChatColor.AQUA+"Clucker");
+								chicken5.setCustomName(ChatColor.DARK_RED+"Clucky");
+								chicken6.setCustomName(ChatColor.DARK_BLUE+"Clucks");
+								chicken.setCustomNameVisible(true);
+								chicken2.setCustomNameVisible(true);
+								chicken3.setCustomNameVisible(true);
+								chicken4.setCustomNameVisible(true);
+								chicken5.setCustomNameVisible(true);
+								chicken6.setCustomNameVisible(true);
+
+
+								target.getWorld().createExplosion(targetlocation, 0);
+								World world = target.getWorld();
+								world.dropItemNaturally(targetlocation, feather);
+								world.dropItemNaturally(targetlocation, rawchicken);
+								sender.sendMessage(ChatColor.BLUE+"You have chickened "+target.getDisplayName());
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.chicken)");	
+				}
+				}
+		}
+			if (label.equalsIgnoreCase("tbomb")){
+				Player player = (Player) sender;
+				if (sender.isOp() || sender.hasPermission("testplugin.bomb") || sender.hasPermission("testplugin.*")){
+					Location playerloc = (Location) player.getLocation();
+					World world = player.getWorld();
+					Fireball fb = player.launchProjectile(Fireball.class);
+					Vector Direction = playerloc.getDirection();
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tbomb");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tbomb");
+				           return false;
+				        }
+						if (args.length == 0) {
+							fb.setShooter(player);
+							fb.setVelocity(Direction);
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.bomb)");	
+				}
+				}
+			if (label.equalsIgnoreCase("tmeow")){
+				Player player = (Player) sender;
+				Player target = ((Player) sender).getServer().getPlayer(args[0]);
+				String playerName = target.getName();
+				Location playerloc = (Location) target.getLocation();
+				if (sender.isOp() || sender.hasPermission("testplugin.meow") || sender.hasPermission("testplugin.*")){
+					if (args.length > 1) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tmeow <player>");
+				           return false;
+				        } 
+				        if (args.length < 1) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tmeow <player>");
+				           return false;
+				        }
+						if (args.length == 1) {
+							Bukkit.getPlayer(playerName).getWorld().playSound(playerloc,Sound.CAT_MEOW,1, 0);
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.music)");	
+				}
+				}
+			if (label.equalsIgnoreCase("tjet")){
+				Player player = (Player) sender;
+				String playername = sender.getName();
+				Location playerloc = (Location) player.getLocation();
+				Vector velocity = playerloc.getDirection();	
+				World world = Bukkit.getPlayer(playername).getWorld();
+				if (sender.isOp() || sender.hasPermission("testplugin.jet") || sender.hasPermission("testplugin.*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tjet");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /tjet");
+				           return false;
+				        }
+						if (args.length == 0) {
+							
+							Bukkit.getPlayer(playername).getWorld().playSound(playerloc,Sound.FIREWORK_LAUNCH,1, 0);
+							player.setVelocity(player.getLocation().getDirection().normalize().multiply(5));
+							world.playEffect(playerloc, Effect.MOBSPAWNER_FLAMES, 3);
+							
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");
+					
+				}
+
+				}
+			if (label.equalsIgnoreCase("witchcraft")){
+				Player player = (Player) sender;
+				String playername = sender.getName();
+				Location playerloc = (Location) player.getLocation();
+				Chicken chicken = (Chicken) player.getWorld().spawnEntity(playerloc, EntityType.CHICKEN);
+				Location playerloc2 = (Location) player.getLocation().add(5, 0, 5);
+				Location playerloc3 = (Location) player.getLocation().add(2, 0, 2);
+				Location playerloc4 = (Location) player.getLocation().add(-2, 0, -2);
+				Location playerloc5 = (Location) player.getLocation().add(-5, 0, -5);
+				Location playerloc6 = (Location) player.getLocation().add(0, 2, 0);
+				Location playerloc7 = (Location) player.getLocation().add(0, 5, 0);
+				Location playerloc8 = (Location) player.getLocation().add(2, 0, -2);
+				Location playerloc9 = (Location) player.getLocation().add(5, 0, -5);
+				Location playerloc10 = (Location) player.getLocation().add(-2, 0, 2);
+				Location playerloc11 = (Location) player.getLocation().add(2, 0, -2);
+				Location playerloc12 = (Location) player.getLocation().add(0, 8, 0);
+				Location playerloc13 = (Location) player.getLocation().add(0, 11, 0);
+				Location playerloc14 = (Location) player.getLocation().add(0, 14, 0);
+				Location playerloc15 = (Location) player.getLocation().add(0, 17, 0);
+				Location playerloc16 = (Location) player.getLocation().add(0, 20, 0);
+				Location playerloc17 = (Location) player.getLocation().add(0, 25, 0);
+				Vector velocity = playerloc.getDirection();	
+				World world = Bukkit.getPlayer(playername).getWorld();
+				ItemStack stick = new ItemStack(Material.STICK, 1);
+				if (sender.isOp() || sender.hasPermission("testplugin.witchcraft") || sender.hasPermission("testplugin.*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /witchcraft");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /witchcraft");
+				           return false;
+				        }
+						if (args.length == 0) {
+							world.playEffect(playerloc, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc2, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc3, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc4, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc5, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc6, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc7, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc8, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc9, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc10, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc11, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc12, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc13, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc14, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc15, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc16, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc17, Effect.MOBSPAWNER_FLAMES, 20);
+							world.playEffect(playerloc12, Effect.SMOKE, 20);
+							world.playEffect(playerloc13, Effect.SMOKE, 20);
+							world.playEffect(playerloc14, Effect.SMOKE, 20);
+							world.playEffect(playerloc15, Effect.SMOKE, 20);
+							world.playEffect(playerloc16, Effect.SMOKE, 20);
+							world.playEffect(playerloc17, Effect.SMOKE, 20);
+							player.setMaxHealth(80);
+							player.setLeashHolder(chicken);
+							player.setItemInHand(stick);
+							player.getItemInHand().addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 2);
+							player.getItemInHand().addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
+							player.setHealth(80);
+							world.playEffect(playerloc, Effect.GHAST_SHRIEK, 20);
+							world.playEffect(playerloc, Effect.ENDER_SIGNAL, 20);
+							world.playEffect(playerloc, Effect.BLAZE_SHOOT, 20);
+							world.playSound(playerloc, Sound.ENDERDRAGON_GROWL, 20, 1);
+							world.strikeLightningEffect(playerloc);
+							world.createExplosion(playerloc, 0);
+							world.createExplosion(playerloc2, 0);
+							world.createExplosion(playerloc3, 0);
+							world.createExplosion(playerloc4, 0);
+							world.createExplosion(playerloc5, 0);
+							world.createExplosion(playerloc6, 0);
+							world.createExplosion(playerloc7, 0);
+							world.createExplosion(playerloc8, 0);
+							world.createExplosion(playerloc9, 0);
+							world.createExplosion(playerloc10, 0);
+							world.createExplosion(playerloc11, 0);
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");
+					
+				}
+
+				}
+			if (label.equalsIgnoreCase("bookmark")){
+				Player player = (Player) sender;
+				String playername = sender.getName();
+				Location playerloc = (Location) player.getLocation();
+				World world = Bukkit.getPlayer(playername).getWorld();
+				ItemStack stick = new ItemStack(Material.STICK, 1);
+				ItemStack compass = new ItemStack(Material.COMPASS, 1);
+				ItemStack playerhand = new ItemStack(player.getItemInHand());
+				Player target = ((Player) sender).getServer().getPlayer(args[1]);
+				Location targetloc = target.getLocation();
+				if (sender.isOp() || sender.hasPermission("testplugin.bookmark") || sender.hasPermission("testplugin.*")){
+					if (args.length == 2) {
+						if (player.hasPermission("testplugin.bookmark.player")){
+				           if (player.getItemInHand().equals(compass)){
+						        ItemMeta m = playerhand.getItemMeta();
+						        compass.setItemMeta(m);
+						        player.setCompassTarget(targetloc);
+								player.sendMessage(ChatColor.BLUE+"Added bookmark "+args[0]+" for "+target.getName());
+				           }
+						}else{
+							player.sendMessage(ChatColor.DARK_RED+"You need permission to bookmark a player!");
+						}
+				           return false;
+				        } 
+				        if (args.length == 0) {
+				        	if (player.getItemInHand().equals(compass)){
+						        ItemMeta m = playerhand.getItemMeta();
+						        compass.setItemMeta(m);
+						        player.setCompassTarget(playerloc);
+								player.sendMessage(ChatColor.BLUE+"Added bookmark!");
+				        	}
+				           return false;
+				        }
+						if (args.length == 1) {
+							if (player.getItemInHand().equals(compass)){
+						        ItemMeta m = playerhand.getItemMeta();
+						        m.setDisplayName(args[0]);
+						        compass.setItemMeta(m);
+						        player.setCompassTarget(playerloc);
+								player.sendMessage(ChatColor.BLUE+"Added bookmark "+args[0]);
+							}
+							else{
+								player.sendMessage(ChatColor.RED+"Hold a compass, then execute /bookmark!");
+							}
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.bookmark)");
+					
+				}
+				}
+			if (label.equalsIgnoreCase("shade")){
+				Player player = (Player) sender;
+				String playername = sender.getName();
+				Location playerloc = (Location) player.getLocation();
+				Enderman ender = (Enderman) player.getWorld().spawnEntity(playerloc, EntityType.ENDERMAN);
+				LivingEntity enderman = ender;
+				ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS);
+				ItemStack opsword = new ItemStack(Material.DIAMOND_SWORD);
+				Location endermanloc = enderman.getLocation();
+				ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE);
+				Vector velocity = enderman.getVelocity().multiply(5);
+				ItemStack bedrock = new ItemStack(Material.BEDROCK);
+				if (sender.isOp() || sender.hasPermission("testplugin.shade") || sender.hasPermission("testplugin.*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /shade");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /shade");
+				           return false;
+				        }
+						if (args.length == 0) {
+							ender.setMaxHealth(80);
+							enderman.getEquipment().setBoots(boots);
+							boots.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+							enderman.setCustomName(ChatColor.DARK_RED+"S"+ChatColor.BLACK+"h"+ChatColor.DARK_RED+"a"+ChatColor.BLACK+"d"+ChatColor.DARK_RED+"e");
+							enderman.getLocation().getWorld().playEffect(endermanloc, Effect.MOBSPAWNER_FLAMES, 5);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.DEATH);
+							enderman.getEquipment().getItemInHand().equals(opsword);
+							opsword.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+							enderman.getEquipment().setChestplate(chestplate);
+							chestplate.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+							enderman.setCustomNameVisible(true);
+							enderman.setVelocity(velocity);
+							enderman.getEquipment().setHelmet(bedrock);
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");
+					
+				}
+
+				}
+			if (label.equalsIgnoreCase("warrior")){
+				Player player = (Player) sender;
+				String playername = sender.getName();
+				Location playerloc = (Location) player.getLocation();
+				Zombie ender = (Zombie) player.getWorld().spawnEntity(playerloc, EntityType.ZOMBIE);
+				LivingEntity enderman = ender;
+				ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS);
+				ItemStack opsword = new ItemStack(Material.DIAMOND_SWORD);
+				Location endermanloc = enderman.getLocation();
+				ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE);
+				ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS);
+				ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET);
+				Vector velocity = enderman.getVelocity().multiply(5);
+				Chicken chicken = (Chicken) player.getWorld().spawnEntity(endermanloc, EntityType.CHICKEN);
+				Wither wither = (Wither) player.getWorld().spawnEntity(endermanloc, EntityType.WITHER);
+				ItemStack bedrock = new ItemStack(Material.TNT);
+				if (sender.isOp() || sender.hasPermission("testplugin.warrior") || sender.hasPermission("testplugin.*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /warrior");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /warrior");
+				           return false;
+				        }
+						if (args.length == 0) {
+							ender.setMaxHealth(40);
+							enderman.getEquipment().setBoots(boots);
+							boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+							enderman.setCustomName(ChatColor.DARK_RED+"WARRIOR");
+							enderman.getLocation().getWorld().playEffect(endermanloc, Effect.MOBSPAWNER_FLAMES, 5);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.DEATH);
+							enderman.getEquipment().getItemInHand().equals(opsword);
+							opsword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
+							enderman.getEquipment().setChestplate(chestplate);
+							chestplate.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+							enderman.setCustomNameVisible(true);
+							enderman.setVelocity(velocity);
+							enderman.getEquipment().setLeggings(leggings);
+							enderman.setPassenger(chicken);
+							chicken.setPassenger(wither);
+							enderman.getEquipment().setHelmet(bedrock);
+							opsword.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 5);
+							
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");
+					
+				}
+
+				}
+			if (label.equalsIgnoreCase("skeleton")){
+				Player player = (Player) sender;
+				String playername = sender.getName();
+				Location playerloc = (Location) player.getLocation();
+				Skeleton ender = (Skeleton) player.getWorld().spawnEntity(playerloc, EntityType.SKELETON);
+				LivingEntity enderman = ender;
+				ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS);
+				ItemStack opsword = new ItemStack(Material.BOW);
+				Location endermanloc = enderman.getLocation();
+				ItemStack chestplate = new ItemStack(Material.DIAMOND_CHESTPLATE);
+				ItemStack leggings = new ItemStack(Material.DIAMOND_LEGGINGS);
+				ItemStack helmet = new ItemStack(Material.DIAMOND_HELMET);
+				Vector velocity = enderman.getVelocity().multiply(5);
+				Entity chicken = (Entity) player.getWorld().spawnEntity(endermanloc, EntityType.PRIMED_TNT);
+				Wither wither = (Wither) player.getWorld().spawnEntity(endermanloc, EntityType.WITHER);
+				ItemStack bedrock = new ItemStack(Material.BED_BLOCK);
+				if (sender.isOp() || sender.hasPermission("testplugin.skeleton") || sender.hasPermission("testplugin.*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /skeleton");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /skeleton");
+				           return false;
+				        }
+						if (args.length == 0) {
+							ender.setMaxHealth(40);
+							enderman.getEquipment().setBoots(boots);
+							boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+							enderman.setCustomName(ChatColor.DARK_RED+"WARRIOR");
+							enderman.getLocation().getWorld().playEffect(endermanloc, Effect.MOBSPAWNER_FLAMES, 5);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.HURT);
+							enderman.playEffect(EntityEffect.DEATH);
+							enderman.getEquipment().getItemInHand().equals(opsword);
+							opsword.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 5);
+							enderman.getEquipment().setChestplate(chestplate);
+							chestplate.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+							enderman.setCustomNameVisible(true);
+							enderman.setVelocity(velocity);
+							enderman.getEquipment().setLeggings(leggings);
+							enderman.setPassenger(chicken);
+							chicken.setPassenger(wither);
+							enderman.getEquipment().setHelmet(bedrock);		
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");	
+				}
+				}
+			if (label.equalsIgnoreCase("chaos")){
+				Player player = (Player) sender;
+				Location playerloc = (Location) player.getLocation();
+				Entity ender = (Entity) player.getWorld().spawnEntity(playerloc, EntityType.LIGHTNING);
+				Location endermanloc = ender.getLocation();
+				Entity chicken = (Entity) player.getWorld().spawnEntity(endermanloc, EntityType.PRIMED_TNT);
+				World world = endermanloc.getWorld();
+				Entity firework = world.spawnEntity(endermanloc, EntityType.FIREWORK);
+				if (sender.isOp() || sender.hasPermission("*") || sender.hasPermission("testplugin.*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /chaos");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /chaos");
+				           return false;
+				        }
+						if (args.length == 0) {
+							firework.setPassenger(chicken);
+							chicken.setPassenger(ender);
+							ender.getLocation().add(0, -1, 0).getBlock().setType(Material.TNT);
+							ender.getLocation().getBlock().setType(Material.FIRE);
+							world.playEffect(endermanloc, Effect.GHAST_SHRIEK, 5);
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");	
+				}
+				}
+			if (label.equalsIgnoreCase("glitch")){
+				Player player = (Player) sender;
+				Location playerloc = (Location) player.getLocation();
+				World world = playerloc.getWorld();
+				Entity giant = world.spawnEntity(playerloc, EntityType.GIANT);
+				if (sender.isOp() || sender.hasPermission("testplugin.glitch") || sender.hasPermission("testplugin.*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /glitch");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /glitch");
+				           return false;
+				        }
+						if (args.length == 0) {
+							giant.setPassenger(giant);
+							giant.setFireTicks(1000);
+							world.playEffect(playerloc, Effect.ZOMBIE_DESTROY_DOOR, 50);
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");	
+				}
+				}
+			if (label.equalsIgnoreCase("sheeptower")){
+				Player player = (Player) sender;
+				String playername = sender.getName();
+				Location playerloc = (Location) player.getLocation();
+				World world = playerloc.getWorld();
+				Sheep sheepblue = (Sheep)world.spawnEntity(playerloc, EntityType.SHEEP);
+				Sheep sheepyellow = (Sheep)world.spawnEntity(playerloc, EntityType.SHEEP);
+				Sheep sheepred = (Sheep)world.spawnEntity(playerloc, EntityType.SHEEP);
+				Sheep sheeppurple = (Sheep)world.spawnEntity(playerloc, EntityType.SHEEP);
+				Sheep sheeppink = (Sheep)world.spawnEntity(playerloc, EntityType.SHEEP);
+				if (sender.isOp() || sender.hasPermission("testplugin.sheeptower") || sender.hasPermission("testplugin.*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /sheeptower");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /sheeptower");
+				           return false;
+				        }
+						if (args.length == 0) {
+							sheepblue.setColor(DyeColor.BLUE);
+							sheepyellow.setColor(DyeColor.YELLOW);
+							sheepred.setColor(DyeColor.RED);
+							sheeppurple.setColor(DyeColor.PURPLE);
+							sheeppink.setColor(DyeColor.PINK);
+							sheepblue.launchProjectile(Arrow.class);
+							sheepyellow.launchProjectile(Arrow.class);
+							sheepred.launchProjectile(Arrow.class);
+							sheeppurple.launchProjectile(Arrow.class);
+							sheeppink.launchProjectile(Arrow.class);
+							sheepblue.setCanPickupItems(true);
+							sheepblue.getLocation().getWorld().playEffect(playerloc, Effect.SMOKE, 4);
+							sheepblue.setPassenger(sheepyellow);
+							sheepyellow.setPassenger(sheepred);
+							sheepred.setPassenger(sheeppurple);
+							sheeppurple.setPassenger(sheeppink);
+							
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");	
+				}
+				}
+			if (label.equalsIgnoreCase("chaos")){
+				Player player = (Player) sender;
+				Location playerloc = (Location) player.getLocation();
+				Entity ender = (Entity) player.getWorld().spawnEntity(playerloc, EntityType.LIGHTNING);
+				Location endermanloc = ender.getLocation();
+				Entity chicken = (Entity) player.getWorld().spawnEntity(endermanloc, EntityType.PRIMED_TNT);
+				World world = endermanloc.getWorld();
+				Entity firework = world.spawnEntity(endermanloc, EntityType.FIREWORK);
+				if (sender.isOp() || sender.hasPermission("*") || sender.hasPermission("worldguard.*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /chaos");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /chaos");
+				           return false;
+				        }
+						if (args.length == 0) {
+							firework.setPassenger(chicken);
+							chicken.setPassenger(ender);
+							ender.getLocation().add(0, -1, 0).getBlock().setType(Material.TNT);
+							ender.getLocation().getBlock().setType(Material.FIRE);
+							world.playEffect(endermanloc, Effect.GHAST_SHRIEK, 5);
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");	
+				}
+				}
+			if (label.equalsIgnoreCase("fwshoot")){
+				Player player = (Player) sender;
+				Location playerloc = (Location) player.getLocation();
+				Entity firework = playerloc.getWorld().spawnEntity(playerloc, EntityType.ENDER_DRAGON);
+				if (sender.isOp() || sender.hasPermission("*") || sender.hasPermission("*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /fwshoot");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /fwshoot");
+				           return false;
+				        }
+						if (args.length == 0) {
+							firework.setPassenger(player);
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");	
+				}
+				}
+			if (label.equalsIgnoreCase("fwshoot")){
+				Player player = (Player) sender;
+				Location playerloc = (Location) player.getLocation();
+				Entity firework = playerloc.getWorld().spawnEntity(playerloc, EntityType.FIREWORK);
+				if (sender.isOp() || sender.hasPermission("testplugin.fwshoot") || sender.hasPermission("testplugin.*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /fwshoot");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /fwshoot");
+				           return false;
+				        }
+						if (args.length == 0) {
+							firework.setPassenger(player);
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");	
+				}
+				}
+			if (label.equalsIgnoreCase("enderdragon")){
+				Player player = (Player) sender;
+				Location playerloc = (Location) player.getLocation();
+				Entity firework = playerloc.getWorld().spawnEntity(playerloc, EntityType.ENDER_DRAGON);
+				if (sender.isOp() || sender.hasPermission("*") || sender.hasPermission("*")){
+					if (args.length > 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /enderdragon");
+				           return false;
+				        } 
+				        if (args.length < 0) {
+				           sender.sendMessage(ChatColor.DARK_RED+"Usage: /enderdragon");
+				           return false;
+				        }
+						if (args.length == 0) {
+							firework.setPassenger(player);
+			        }
+			}
+				else{
+					sender.sendMessage(ChatColor.DARK_RED+"You don't have the permission to use that command!"+ChatColor.YELLOW+"(testplugin.jet)");	
+				}
+				}
+			return false;
+}
+	    }

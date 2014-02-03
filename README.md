@@ -1,0 +1,4 @@
+LikeABoss
+=========
+
+LikeABoss Bukkit Plugin
